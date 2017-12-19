@@ -9,7 +9,7 @@
 
 int width = GetSystemMetrics(SM_CXSCREEN) / 2;
 int height = width;
-double aspectRatio = 1;
+double aspectRatio = width / height;
 int cellWidth = width / 100;
 int cellHeight = cellWidth * aspectRatio;
 int cellHcount = width / cellWidth;
@@ -81,11 +81,11 @@ void validatePosition(int &x, int &y) {
 	}
 }
 
-void findClusters(std::vector<Coord> &coords) {
+void findClusters(std::vector<Coord> &coords, double density) {
 	Coord c;
 	int count, dy, dx;
 	int scanCellCount = scanSize * scanSize;
-	int threshold = scanCellCount * 0.8; // if number of occupied cells is over threshold then mark the point
+	int threshold = scanCellCount * density; // if number of occupied cells is over threshold then mark the point
 	bool flag = false; // means ignore this cluster
 
 	for (int y = 0; y < cellVcount - scanSize / 2; y += scanSize / 2) {
@@ -415,7 +415,7 @@ int main() {
 		}
 
 		clusters.clear();
-		findClusters(clusters);
+		findClusters(clusters, 0.8);
 
 		for (int i = 0; i < clusters.size(); i++) {
 			int x = clusters[i].x;
