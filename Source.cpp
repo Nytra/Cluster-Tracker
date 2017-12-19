@@ -414,7 +414,7 @@ int main() {
 		}
 
 		clusters.clear();
-		findClusters(clusters, 0.8);
+		findClusters(clusters, 0.9);
 
 		for (int i = 0; i < clusters.size(); i++) {
 			int x = clusters[i].x;
