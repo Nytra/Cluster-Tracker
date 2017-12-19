@@ -3,7 +3,6 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <Windows.h>
-#include "wtypes.h"
 #include "constants.h"
 #include "bot.h"
 
