@@ -2,11 +2,28 @@
 #include <random>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <Windows.h>
+#include "wtypes.h"
 #include "constants.h"
 #include "bot.h"
 
+int width = GetSystemMetrics(SM_CXSCREEN) / 2;
+int height = width;
+double aspectRatio = 1;
+int cellWidth = width / 100;
+int cellHeight = cellWidth * aspectRatio;
+int cellHcount = width / cellWidth;
+int cellVcount = cellHcount * aspectRatio;
+int cellCount = cellHcount * cellVcount;
+
+int scanSize = cellHcount / 20; // in cells
+int scanRegionWidth = cellWidth * scanSize; // pixels per scan region
+int scanRegionHeight = scanRegionWidth; // pixels per scan region
+int scanRegionHcount = width / scanRegionWidth;
+int scanRegionVcount = height / scanRegionHeight;
+
 static Bot bots[maxBots];
-static int cells[cellVcount][cellHcount];
+static int *cells = new int[cellVcount * cellHcount];
 sf::RenderWindow window(sf::VideoMode(width, height), "Simulation");
 sf::RectangleShape cell(sf::Vector2f(cellWidth, cellHeight));
 
@@ -35,7 +52,7 @@ int sign(int val) {
 
 bool checkCell(int x, int y) {
 
-	if (cells[y][x] == 1) {
+	if (cells[(y * cellHcount) + x] == 1) {
 		return true;
 	}
 	else {
@@ -256,13 +273,13 @@ void initCells() {
 	for (int y = 0; y < cellVcount; y++) {
 
 		for (int x = 0; x < cellHcount; x++) {
-			cells[y][x] = 0;
+			cells[(y * cellHcount) + x] = 0;
 		}
 	}
 }
 
 void setCell(int x, int y) {
-	cells[y][x] = 1;
+	cells[(y * cellHcount) + x] = 1;
 }
 
 int main() {
