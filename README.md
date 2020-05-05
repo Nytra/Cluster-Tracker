@@ -1,5 +1,5 @@
 # Cluster-Tracker
-It's a graphics / computer vision demo of some clusters of coloured pixels that get tracked by a custom algorithm that just works with the raw pixel data. 
+It's a graphics / computer vision demo of some clusters of coloured pixels that get tracked by a custom algorithm that works by iterating over the raw pixel array and finding areas where the density of same-colour pixels is high. 
 
 Requires SFML.
 
